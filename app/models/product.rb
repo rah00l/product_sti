@@ -1,4 +1,5 @@
 class Product < ApplicationRecord
 	# Validation
-	validates :name, :price, :status, :inward_date, :type, :description, presence: true
+	validates :name, :price, :inward_date, :type, :description, presence: true
+	validates :status, inclusion: { in: [ true, false ] }
 end
