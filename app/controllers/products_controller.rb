@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
-	# GET /products
-	def index
+	 before_action :set_product, only: [:edit, :update]
+  # GET /products
+  def index
 		@products = Product.all
 
 		respond_to do |format|
@@ -27,9 +28,26 @@ class ProductsController < ApplicationController
 
   def edit
   end
+
+  # PUT /products/1
+  def update
+    respond_to do |format|
+      if @product.update(product_params)
+        format.html { redirect_to products_path, notice: 'product was successfully updated.' }
+      else
+        format.html { render action: "edit" }
+      end
+    end
+  end
+
   private
 
   def product_params
     params.require(:product).permit(:name, :price, :color, :status, :inward_date, :type, :description)
   end
+
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
 end
